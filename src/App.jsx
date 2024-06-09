@@ -5,17 +5,19 @@ import { useState } from "react";
 
 function App() {
   const [initialValue, setInitialValue] = useState({
-    intialInverstment: 15000,
-    annualInverstment: 1200,
+    initialInvestment: 15000,
+    annualInvestment: 1200,
     expectedReturn: 6,
     duration: 10
 });
+
+const inputIsValid = initialValue.duration >=1;
 
 function onChangeValue(inputIdentifier, newValue) {
     setInitialValue(prevUserData => {
         return {
             ...prevUserData,
-            [inputIdentifier]: newValue
+            [inputIdentifier]: +newValue
         }
     })
 }
@@ -23,7 +25,8 @@ function onChangeValue(inputIdentifier, newValue) {
     <>
     <Header />
     <Userinput initialValue={initialValue} changeValue={onChangeValue}/>
-    <Result input={initialValue}/>
+    {!inputIsValid && <p className="center">Please enter duration greater than Zero!!!</p>}
+    {inputIsValid && <Result input={initialValue}/>}
     
     </>
     
